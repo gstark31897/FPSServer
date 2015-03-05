@@ -15,18 +15,21 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
 /**
  *
  * @author Octalus
  */
 public class FPSServer {
+    public static ArrayList<String> strings;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(6667);
-        int playerCount = 1;
+        int playerCount = 2;
         
         ArrayList<Player> players = new ArrayList<Player>();
         for(int i = 0; i < playerCount; i++) {
@@ -37,6 +40,11 @@ public class FPSServer {
         System.out.println("All Clients Connected");
         
         while(true) {
+            strings = new ArrayList<String>();
+            for(Player p: players) {
+                p.read();
+                strings.add(p.getPosition());
+            }
         }
     }
     

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -26,6 +27,28 @@ public class Player {
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.id = id;
+        out.println(id);
+    }
+    
+    public void read() throws IOException {
+        while(in.ready()) {
+            String line = in.readLine().split("-")[1];
+            System.out.println(line);
+            
+            if(line.startsWith("pt")) {     //Player Transform
+                setPosition(line);
+            }
+        }
+    }
+    
+    public String getPosition() {
+        return id + "-pt" + x_position + "," + y_position + "," + z_position;
+    }
+    
+    public void write(ArrayList<String> strings) {
+        for(String string: strings) {
+            out.println(string);
+        }
     }
     
     public void setPosition(String position) {
