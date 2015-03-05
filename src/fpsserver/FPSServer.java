@@ -26,21 +26,18 @@ public class FPSServer {
      */
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(6667);
-        Scanner input = new Scanner(System.in);
-        System.out.println("How many players?");
-        int playerCount = input.nextInt();
-        input.close();
+        int playerCount = 1;
         
-        ArrayList<Socket> players = new ArrayList<Socket>();
-        ArrayList<PrintWriter> outs = new ArrayList<PrintWriter>();
-        ArrayList<BufferedReader> ins = new ArrayList<BufferedReader>();
+        ArrayList<Player> players = new ArrayList<Player>();
         for(int i = 0; i < playerCount; i++) {
-            players.add(serverSocket.accept());
-            outs.add(new PrintWriter(players.get(i).getOutputStream(), true));
-            ins.add(new BufferedReader(new InputStreamReader(players.get(i).getInputStream())));
+            players.add(new Player(serverSocket.accept(), i));
+            System.out.println("A client connected");
         }
         
         System.out.println("All Clients Connected");
+        
+        while(true) {
+        }
     }
     
 }
